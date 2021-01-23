@@ -7,6 +7,7 @@ import (
 	"io/ioutil"
 	"net"
 	"net/http"
+	"strings"
 )
 
 func getInterfaceAddr(ifName string, v6 bool) (*net.TCPAddr, error) {
@@ -133,16 +134,16 @@ func AddRecord(parameter AddDomainParameter, sk string, ifName string) error {
 }
 
 func DetectIP(source string, ifName string, v6 bool) (string, error) {
-	if source == "" {
-		addr, err := getInterfaceAddr(ifName, v6)
+	if strings.HasPrefix(source, "http://") || strings.HasPrefix(source, "https://") {
+		result, err := HTTPGet(source, ifName, v6)
 		if err != nil {
 			return "", err
 		}
-		return addr.IP.String(), nil
+		return string(result), nil
 	}
-	result, err := HTTPGet(source, ifName, v6)
+	addr, err := getInterfaceAddr(source, v6)
 	if err != nil {
 		return "", err
 	}
-	return string(result), nil
+	return addr.IP.String(), nil
 }

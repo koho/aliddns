@@ -16,7 +16,7 @@ var (
 	recordType = flag.String("t", "A", "record type")
 	line       = flag.String("l", "default", "line <default|telecom|unicom|mobile|oversea|edu|drpeng|btvn>")
 	ttl        = flag.Int("ttl", 600, "TTL")
-	source     = flag.String("s", "https://api64.ipify.org/", "IP source url (use interface address if it's empty)")
+	source     = flag.String("s", "https://api64.ipify.org/", "IP source url or interface name")
 	ifName     = flag.String("if", "", "interface name")
 	interval   = flag.Int("i", 300, "update interval(Seconds)")
 	v6         = flag.Bool("6", false, "use IPv6")
