@@ -103,8 +103,10 @@ func QueryRecord(parameter DescribeDomainParameter, sk string, ifName string) (*
 			mapstructure.Decode(r, &drList)
 		}
 	}
-	if len(drList) > 0 {
-		return &drList[0], nil
+	for _, dr := range drList {
+		if dr.RR == parameter.RRKeyWord {
+			return &dr, nil
+		}
 	}
 	return nil, nil
 }
